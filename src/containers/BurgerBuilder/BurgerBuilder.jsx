@@ -20,29 +20,32 @@ const BurgerBuilder = props => {
 
   const [price, setPrice] = useState(4);
 
-  // useEffect(() => {
-  //   setPrice(prevPrice => {});
-  // }, ingredients);
-
   const addIngredientHandler = type => {
     setIngredients(prevIngredients => ({
       ...prevIngredients,
       [type]: prevIngredients[type] + 1
     }));
 
-    setPrice(prevPrice => prevPrice + ingredients[type]);
+    setPrice(prevPrice => prevPrice + INGREDIENT_PRICES[type]);
   };
 
   const removeIngredientHandler = type => {
     if (ingredients[type] > 0) {
       setIngredients(prevIngredients => ({
         ...prevIngredients,
-        [type]: prevIngredients - 1
+        [type]: prevIngredients[type] - 1
       }));
-
-      setPrice(prevPrice => prevPrice - ingredients[type]);
+      setPrice(prevPrice => prevPrice - INGREDIENT_PRICES[type]);
     }
   };
+
+  const disabledInfo = {
+    ...ingredients
+  };
+
+  for (let key in disabledInfo) {
+    disabledInfo[key] = disabledInfo[key] <= 0; // Returns true or false for every key is the ingredient is cero
+  }
 
   return (
     <Fragment>
@@ -50,6 +53,8 @@ const BurgerBuilder = props => {
       <BuildControls
         ingredientAdded={addIngredientHandler}
         ingredientRemoved={removeIngredientHandler}
+        disabled={disabledInfo} // {salad: false, meat: true, ...}
+        price={price}
       />
     </Fragment>
   );
