@@ -72,10 +72,23 @@ const BurgerBuilder = props => {
     disabledInfo[key] = disabledInfo[key] <= 0; // Returns true or false for every key is the ingredient is cero
   }
 
+  const purchaseCancelHandler = () => {
+    setPurchasing(false);
+  };
+
+  const puchaseContinueHandler = () => {
+    alert("continue");
+  };
+
   return (
     <Fragment>
-      <Modal show={purchasing}>
-        <OrderSummary ingredients={ingredients} />
+      <Modal show={purchasing} modalClosed={purchaseCancelHandler}>
+        <OrderSummary
+          purchaseCanceled={purchaseCancelHandler}
+          purchaseContinued={puchaseContinueHandler}
+          ingredients={ingredients}
+          price={price}
+        />
       </Modal>
       <Burger ingredients={ingredients} />
       <BuildControls
