@@ -30,6 +30,14 @@ const BurgerBuilder = props => {
     setPurchasing(true);
   };
 
+  const purchaseCancelHandler = () => {
+    setPurchasing(false);
+  };
+
+  const puchaseContinueHandler = () => {
+    alert("continue");
+  };
+
   const updatePurchaseState = ingredientsUpdated => {
     const sum = Object.keys(ingredientsUpdated)
       .map(igKey => {
@@ -72,19 +80,11 @@ const BurgerBuilder = props => {
     disabledInfo[key] = disabledInfo[key] <= 0; // Returns true or false for every key is the ingredient is cero
   }
 
-  const purchaseCancelHandler = () => {
-    setPurchasing(false);
-  };
-
-  const puchaseContinueHandler = () => {
-    alert("continue");
-  };
-
   return (
     <Fragment>
       <Modal show={purchasing} modalClosed={purchaseCancelHandler}>
         <OrderSummary
-          purchaseCanceled={purchaseCancelHandler}
+          purchaseCancelled={purchaseCancelHandler}
           purchaseContinued={puchaseContinueHandler}
           ingredients={ingredients}
           price={price}

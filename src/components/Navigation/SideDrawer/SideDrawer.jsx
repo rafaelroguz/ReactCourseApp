@@ -7,13 +7,21 @@ import Backdrop from "../../UI/Backdrop/Backdrop";
 import styles from "./SideDrawer.module.css";
 
 const SideDrawer = props => {
-  console.log(props.open);
+  const attachedClasses = [styles.SideDrawer];
+
+  if (props.open) {
+    attachedClasses.push(styles.Open);
+  } else {
+    attachedClasses.push(styles.Closed);
+  }
 
   return (
     <Fragment>
       <Backdrop show={props.open} clicked={props.closed} />
-      <div className={styles.SideDrawer}>
-        <Logo height="11%" />
+      <div className={attachedClasses.join(" ")}>
+        <div className={styles.Logo}>
+          <Logo />
+        </div>
         <nav>
           <NavigationItems />
         </nav>
