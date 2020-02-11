@@ -6,16 +6,23 @@ const withErrorHandler = (WrappedComponent, axios) => {
   return props => {
     const [error, setError] = useState(null);
 
+    // component did mount
     useEffect(() => {
-      axios.interceptors.request.use(req => {
+      const reqInterceptor = axios.interceptors.request.use(req => {
         setError(null);
         return req;
       });
 
-      axios.interceptors.response.use(
+      const resInterceptor = axios.interceptors.response.use(
         res => res,
         error => setError(error)
       );
+
+      // component will unmount
+      return () => {
+        axios.interceptors.request.eject(reqInterceptor);
+        axios.interceptors.response.eject(resInterceptor);
+      };
     }, []);
 
     const errorConfirmedHandler = () => {
